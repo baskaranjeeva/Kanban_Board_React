@@ -8,8 +8,13 @@ function ModalContainer() {
   const uid = new ShortUniqueId();
   let txt;
 
-  const { setModalShow, arrTickets, activeButton, setActiveButton } =
-    useContext(StoreContext);
+  const {
+    setModalShow,
+    arrTickets,
+    setArrTickets,
+    activeButton,
+    setActiveButton,
+  } = useContext(StoreContext);
 
   const handleTaskChange = (event) => {
     txt = event.target.value;
@@ -22,7 +27,8 @@ function ModalContainer() {
       let uniqu_id = uid.randomUUID ? uid.randomUUID() : uid(); // For compatibility with different versions
       // setTaskData(txt);
       let ticketObj = { tid: uniqu_id, tcolor: activeButton, ttask: txt };
-      arrTickets.push(ticketObj);
+      // arrTickets.push(ticketObj);
+      setArrTickets((prevTickets) => [...prevTickets, ticketObj]);
       event.target.value = "";
       console.log(activeButton);
       console.log(ticketObj);
