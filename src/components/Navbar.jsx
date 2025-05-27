@@ -79,7 +79,7 @@ function Navbar() {
             <div>
               <img
                 onClick={() => dispModal()}
-                className="w-12 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-12  mt-3 cursor-pointer hover:opacity-80 transition-opacity"
                 src={addBtn}
                 alt="Add Ticket"
               />

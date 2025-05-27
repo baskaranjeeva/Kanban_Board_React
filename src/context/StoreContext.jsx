@@ -10,6 +10,31 @@ const StoreContextProvider = (props) => {
   const [ticketDelete, setTicketDelete] = useState(null);
   const [filterColor, setFilterColor] = useState("all"); // State for filtering tickets by color
 
+  // Load tickets from localStorage when component mounts
+  useEffect(() => {
+    const savedTickets = localStorage.getItem("kanban-tickets");
+    if (savedTickets) {
+      try {
+        const parsedTickets = JSON.parse(savedTickets);
+        setArrTickets(parsedTickets);
+      } catch (error) {
+        console.error("Error parsing saved tickets: ", error);
+        // If there's an error parsing, start with empty array
+        setArrTickets([]);
+      }
+    }
+  }, []);
+
+  // Save tickets to localStorage whenever arrTickets changes
+  useEffect(() => {
+    if (arrTickets.length > 0) {
+      localStorage.setItem("kanban-tickets", JSON.stringify(arrTickets));
+    } else {
+      // If no tickets, remove the item from localStorage
+      localStorage.removeItem("kanban-tickets");
+    }
+  }, [arrTickets]);
+
   // Function to delete a ticket by ID
   const deleteTicket = (ticketId) => {
     setArrTickets((prevTickets) =>
