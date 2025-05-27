@@ -4,31 +4,73 @@ import delBtn from "/delete_icon3.png";
 import colors from "../styles/colors";
 import { StoreContext } from "../context/StoreContext";
 function Navbar() {
-  const { isModalShow, setModalShow } = useContext(StoreContext);
+  const {
+    isModalShow,
+    setModalShow,
+    deleteActive,
+    setDeleteActive,
+    filterColor,
+    setFilterColor,
+  } = useContext(StoreContext);
 
   function dispModal() {
     setModalShow(!isModalShow);
     // toggleModle();
-    console.log("Value: ", isModalShow);
+    // console.log("Value: ", isModalShow);
   }
-
+  function toggleDelete() {
+    setDeleteActive(!deleteActive);
+    // console.log(deleteActive);
+  }
+  // Handle filter button clicks
+  const handleFilterClick = (color) => {
+    setFilterColor(filterColor === color ? "all" : color);
+  };
   return (
     <div>
       <div className="flex justify-between items-center bg-[#008299]">
         <div className="ml-8 flex flex-col items-center">
           <h2 className="text-lg font-semibold">Priority Level</h2>
           <div className="flex flex-col mt-2 w-40">
-            <button className="w-full bg-[#FF8585] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50">
-              Backlog
+            <button
+              className={`w-full bg-[#FF8585] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 ${
+                filterColor === "backlog"
+                  ? "ring-4 ring-blue-400 ring-opacity-75"
+                  : ""
+              }`}
+              onClick={() => handleFilterClick("backlog")}
+            >
+              Backlog {filterColor === "backlog" ? "✓" : ""}
             </button>
-            <button className="w-full bg-[#FFD659] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">
-              Doing
+            <button
+              className={`w-full bg-[#FFD659] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 ${
+                filterColor === "doing"
+                  ? "ring-4 ring-blue-400 ring-opacity-75"
+                  : ""
+              }`}
+              onClick={() => handleFilterClick("doing")}
+            >
+              Doing {filterColor === "doing" ? "✓" : ""}
             </button>
-            <button className="w-full bg-[#A4E6FF] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
-              Review
+            <button
+              className={`w-full bg-[#A4E6FF] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 ${
+                filterColor === "review"
+                  ? "ring-4 ring-blue-400 ring-opacity-75"
+                  : ""
+              }`}
+              onClick={() => handleFilterClick("review")}
+            >
+              Review {filterColor === "review" ? "✓" : ""}
             </button>
-            <button className="w-full bg-[#8FF58F] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
-              Done
+            <button
+              className={`w-full bg-[#8FF58F] cursor-pointer text-gray-900 rounded-md py-1 px-4 mb-1 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 ${
+                filterColor === "done"
+                  ? "ring-4 ring-blue-400 ring-opacity-75"
+                  : ""
+              }`}
+              onClick={() => handleFilterClick("done")}
+            >
+              Done {filterColor === "done" ? "✓" : ""}
             </button>
           </div>
         </div>
@@ -43,7 +85,12 @@ function Navbar() {
               />
             </div>
             <button>
-              <img className="w-13 cursor-pointer" src={delBtn} alt="" />
+              <img
+                className="w-13 cursor-pointer"
+                src={delBtn}
+                onClick={() => toggleDelete()}
+                alt=""
+              />
             </button>
           </div>
         </div>
