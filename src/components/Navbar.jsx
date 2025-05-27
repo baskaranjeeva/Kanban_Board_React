@@ -79,19 +79,47 @@ function Navbar() {
             <div>
               <img
                 onClick={() => dispModal()}
-                className="w-12 cursor-pointer"
+                className="w-12 cursor-pointer hover:opacity-80 transition-opacity"
                 src={addBtn}
-                alt=""
+                alt="Add Ticket"
               />
             </div>
-            <button>
-              <img
-                className="w-13 cursor-pointer"
-                src={delBtn}
+            <div className="relative">
+              <button
+                className={`p-2 rounded-lg transition-all duration-200 ${
+                  deleteActive
+                    ? "bg-red-500 ring-4 ring-red-300 ring-opacity-75"
+                    : "hover:bg-gray-200"
+                }`}
                 onClick={() => toggleDelete()}
-                alt=""
-              />
-            </button>
+              >
+                <img
+                  className={`w-13 cursor-pointer transition-all duration-200 ${
+                    deleteActive ? "filter brightness-0 invert" : ""
+                  }`}
+                  src={delBtn}
+                  alt="Delete Mode"
+                />
+              </button>
+
+              {/* Delete mode indicator */}
+              {deleteActive && (
+                <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                  DELETE MODE
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Status text below buttons */}
+          <div className="text-center mt-2 text-sm">
+            {deleteActive ? (
+              <span className="text-red-200 font-semibold animate-pulse">
+                🗑️ Click tickets to delete
+              </span>
+            ) : (
+              <span className="text-gray-300 pl-15">➕ Add | 🗑️ Delete</span>
+            )}
           </div>
         </div>
         <div className="mr-5">
@@ -112,10 +140,10 @@ function Navbar() {
               <label>Sprint End:</label>
               <input type="date" placeholder="Sprint End" />
             </div>
-            <div className="flex mb-1">
+            {/* <div className="flex mb-1">
               <label>Sprint Duration: </label>
               <p>10</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
